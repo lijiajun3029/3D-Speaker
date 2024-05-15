@@ -31,7 +31,8 @@ class WavReader(object):
 
         if self.speed_pertub and self.lm:
             speeds = [1.0, 0.9, 1.1]
-            speed_idx = random.randint(0, 2)
+            # speed_idx = random.randint(0, 2)
+            speed_idx=1
             if speed_idx > 0:
                 wav, _ = torchaudio.sox_effects.apply_effects_tensor(
                     wav.unsqueeze(0), self.sample_rate, [['speed', str(speeds[speed_idx])], ['rate', str(self.sample_rate)]])
@@ -43,9 +44,11 @@ class WavReader(object):
 
         chunk_len = int(self.duration * sr)
         if data_len >= chunk_len:
-            start = random.randint(0, data_len - chunk_len)
-            end = start + chunk_len
-            wav = wav[start:end]
+            # 完全没有必要
+            pass
+            # start = random.randint(0, data_len - chunk_len)
+            # end = start + chunk_len
+            # wav = wav[start:end]
         else:
             wav = F.pad(wav, (0, chunk_len - data_len))
 
